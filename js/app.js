@@ -11,6 +11,35 @@ function sanitizeHTML(str) {
         .replace(/'/g, '&#x27;');
 }
 
+// ===== RATE LIMITER — Protection anti-spam webhooks =====
+const RateLimiter = (() => {
+    const limits = {}; // { key: { count, resetTime } }
+    return {
+        /**
+         * @param {string} key — identifiant de l'action (ex: 'chatbot', 'generate')
+         * @param {number} maxRequests — nombre max de requêtes
+         * @param {number} windowMs — fenêtre de temps en ms
+         * @returns {boolean} true si autorisé, false si bloqué
+         */
+        check(key, maxRequests = 5, windowMs = 60000) {
+            const now = Date.now();
+            if (!limits[key] || now > limits[key].resetTime) {
+                limits[key] = { count: 1, resetTime: now + windowMs };
+                return true;
+            }
+            if (limits[key].count >= maxRequests) {
+                return false;
+            }
+            limits[key].count++;
+            return true;
+        },
+        remaining(key) {
+            if (!limits[key] || Date.now() > limits[key].resetTime) return Infinity;
+            return Math.max(0, 5 - limits[key].count);
+        }
+    };
+})();
+
 // Splash screen — hide after load
 window.addEventListener('load', () => {
     const splash = document.getElementById('splashScreen');
@@ -1105,6 +1134,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnGenerateAI = document.getElementById('btnGenerateAI');
     if (btnGenerateAI) {
         btnGenerateAI.addEventListener('click', async () => {
+            // Rate limit : max 5 générations par minute
+            if (!RateLimiter.check('generate', 5, 60000)) {
+                if (typeof showToast === 'function') showToast('Limite atteinte', 'Trop de générations. Attends quelques secondes.', 'warning');
+                return;
+            }
+
             const platform = document.getElementById('postPlatform').value;
             const contentEl = document.getElementById('postContent');
             const hashtagsEl = document.getElementById('postHashtags');
@@ -1708,6 +1743,12 @@ document.addEventListener('DOMContentLoaded', () => {
     async function sendChat() {
         const text = chatInput.value.trim();
         if (!text) return;
+
+        // Rate limit : max 10 messages par minute
+        if (!RateLimiter.check('chatbot', 10, 60000)) {
+            addChatMsg("Doucement Alison ! Tu m'envoies trop de messages d'un coup. Attends quelques secondes 😅", 'bot');
+            return;
+        }
 
         addChatMsg(text, 'user');
         chatInput.value = '';

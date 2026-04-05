@@ -1,6 +1,13 @@
 // ===== VISIT & SMILE — SUPABASE SERVICE LAYER =====
 
-const db = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
+// Initialisation Supabase avec options sécurisées
+const db = supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY, {
+    auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: false  // Désactiver la détection d'URL pour éviter les attaques par token dans l'URL
+    }
+});
 
 // ===== AUTH =====
 const Auth = {

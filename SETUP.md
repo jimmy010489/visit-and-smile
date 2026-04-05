@@ -24,6 +24,12 @@
 3. Password : choisir un mot de passe sécurisé
 4. Copier l'UUID du user créé
 
+### Sécuriser les CORS
+1. Settings → API → **Allowed Origins**
+2. Supprimer `*` (wildcard)
+3. Ajouter uniquement : `https://app.visitandsmile.fr` (votre domaine de production)
+4. Cela empêche tout autre site web d'appeler votre API Supabase
+
 ### Injecter les données de démo
 1. SQL Editor → New Query
 2. Copier/coller le contenu de `sql/seed.sql`
@@ -135,15 +141,24 @@ Aller dans Settings → Variables et ajouter :
 
 ## 5. Mettre à jour la config
 
-Éditer `js/config.js` :
-```javascript
-const CONFIG = {
-    SUPABASE_URL: 'https://xxxxx.supabase.co',      // ← Votre URL
-    SUPABASE_ANON_KEY: 'eyJhbGciOi...',              // ← Votre anon key
-    N8N_BASE_URL: 'https://n8n.votredomaine.com',    // ← Votre URL n8n
-    // ... les webhooks restent identiques
-};
+### Option A : Meta tags dans index.html (simple)
+Ajouter dans le `<head>` de `index.html` :
+```html
+<meta name="supabase-url" content="https://xxxxx.supabase.co">
+<meta name="supabase-anon-key" content="eyJhbGciOi...">
+<meta name="n8n-url" content="https://n8n.votredomaine.com">
 ```
+
+### Option B : Vercel Edge Middleware (plus securise)
+Les credentials ne sont jamais dans le code source :
+1. Vercel Dashboard → Settings → Environment Variables
+2. Ajouter : `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `N8N_BASE_URL`
+3. Creer un fichier `middleware.js` qui injecte les meta tags cote serveur
+
+### IMPORTANT — Securite CORS Supabase
+1. Supabase Dashboard → Settings → API → Allowed Origins
+2. Remplacer `*` par le domaine de production : `https://app.visitandsmile.fr`
+3. Cela empeche tout autre site d'utiliser votre anon key
 
 ---
 
