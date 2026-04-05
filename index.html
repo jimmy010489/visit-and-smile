@@ -103,6 +103,10 @@
                 <i class="fas fa-gear"></i>
                 <span>Paramètres</span>
             </a>
+            <a href="#" class="nav-item" data-page="guide">
+                <i class="fas fa-book"></i>
+                <span>Guide</span>
+            </a>
         </nav>
         <div class="sidebar-footer">
             <div class="user-info">
@@ -1332,7 +1336,146 @@
                 </div>
             </div>
         </div>
+
+        <!-- Guide Utilisateur -->
+        <div class="page" id="page-guide">
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h2><i class="fas fa-book"></i> Guide d'utilisation</h2>
+                    <p class="page-subtitle">Tout ce qu'il faut savoir pour utiliser Deadpool IA</p>
+                </div>
+                <button class="btn-outline btn-sm" onclick="window.print()"><i class="fas fa-print"></i> Imprimer ce guide</button>
+            </div>
+
+            <div class="guide-content">
+                <div class="guide-section">
+                    <div class="guide-section-icon"><i class="fas fa-rocket"></i></div>
+                    <div class="guide-section-body">
+                        <h3>Premiers pas</h3>
+                        <p>Bienvenue dans <strong>Visit & Smile — Deadpool IA</strong>, ton assistant intelligent pour la gestion de ton activite immobiliere. L'application est divisee en 3 agents qui travaillent pour toi 24/7.</p>
+                        <div class="guide-tip">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Raccourci : appuie sur <kbd>Ctrl+K</kbd> n'importe quand pour ouvrir la palette de commandes rapides !</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <div class="guide-section-icon compta"><i class="fas fa-calculator"></i></div>
+                    <div class="guide-section-body">
+                        <h3>Agent Comptable</h3>
+                        <p>Suivi automatique de ton chiffre d'affaires, commissions, URSSAF et declarations.</p>
+                        <ul class="guide-list">
+                            <li><i class="fas fa-check"></i> Enregistre tes ventes avec le bouton <strong>"+ Nouvelle vente"</strong></li>
+                            <li><i class="fas fa-check"></i> Les commissions et l'URSSAF sont calcules automatiquement</li>
+                            <li><i class="fas fa-check"></i> Exporte tes donnees en CSV pour ton comptable</li>
+                            <li><i class="fas fa-check"></i> Coche les declarations quand elles sont faites</li>
+                            <li><i class="fas fa-check"></i> Un resume hebdomadaire t'est envoye chaque lundi</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <div class="guide-section-icon social"><i class="fas fa-share-alt"></i></div>
+                    <div class="guide-section-body">
+                        <h3>Agent Reseaux Sociaux</h3>
+                        <p>Creation et publication de contenu adapte pour chaque plateforme.</p>
+                        <ul class="guide-list">
+                            <li><i class="fas fa-check"></i> L'IA cree des posts adaptes a Instagram, Facebook, LinkedIn et TikTok</li>
+                            <li><i class="fas fa-check"></i> Clique sur <strong>"Approuver"</strong> pour valider un post avant publication</li>
+                            <li><i class="fas fa-check"></i> Active/desactive la publicite avec le toggle <strong>Ads</strong></li>
+                            <li><i class="fas fa-check"></i> Suis tes performances (likes, portee, engagement) en temps reel</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <div class="guide-section-icon planning"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="guide-section-body">
+                        <h3>Agent Planning & RDV</h3>
+                        <p>Gestion automatique de tes rendez-vous, relances et messages speciaux.</p>
+                        <ul class="guide-list">
+                            <li><i class="fas fa-check"></i> Clique sur un jour du <strong>mini calendrier</strong> pour voir tes RDV</li>
+                            <li><i class="fas fa-check"></i> Les rappels sont envoyes automatiquement (email + SMS)</li>
+                            <li><i class="fas fa-check"></i> Les relances post-visite s'activent toutes seules</li>
+                            <li><i class="fas fa-check"></i> Les anniversaires clients sont envoyes automatiquement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <div class="guide-section-icon clients"><i class="fas fa-users"></i></div>
+                    <div class="guide-section-body">
+                        <h3>Gestion des clients</h3>
+                        <p>Toutes les infos de tes clients au meme endroit.</p>
+                        <ul class="guide-list">
+                            <li><i class="fas fa-check"></i> Ajoute un client avec <strong>"+ Ajouter un client"</strong></li>
+                            <li><i class="fas fa-check"></i> Clique sur l'icone <i class="fas fa-eye" style="color:var(--gold)"></i> pour voir sa fiche detaillee</li>
+                            <li><i class="fas fa-check"></i> Depuis la fiche : envoyer un email, planifier un RDV, modifier ou supprimer</li>
+                            <li><i class="fas fa-check"></i> Exporte ta liste clients en CSV pour tes dossiers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <div class="guide-section-icon chatbot"><i class="fas fa-robot"></i></div>
+                    <div class="guide-section-body">
+                        <h3>Chatbot Deadpool IA</h3>
+                        <p>Ton assistant personnel disponible 24/7. Clique sur le bouton <i class="fas fa-robot" style="color:var(--gold)"></i> en bas a droite.</p>
+                        <ul class="guide-list">
+                            <li><i class="fas fa-check"></i> Demande tes stats : <em>"Quel est mon CA ce mois ?"</em></li>
+                            <li><i class="fas fa-check"></i> Demande des infos clients : <em>"Comment va Marie ?"</em></li>
+                            <li><i class="fas fa-check"></i> Demande des conseils : <em>"Comment ameliorer mon engagement ?"</em></li>
+                            <li><i class="fas fa-check"></i> Demande de la motivation : <em>"Motive-moi !"</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <div class="guide-section-icon shortcuts"><i class="fas fa-keyboard"></i></div>
+                    <div class="guide-section-body">
+                        <h3>Raccourcis clavier</h3>
+                        <div class="guide-shortcuts">
+                            <div class="guide-shortcut"><kbd>Ctrl</kbd>+<kbd>K</kbd><span>Palette de commandes</span></div>
+                            <div class="guide-shortcut"><kbd>Esc</kbd><span>Fermer panel/modal</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <div class="guide-section-icon support"><i class="fas fa-headset"></i></div>
+                    <div class="guide-section-body">
+                        <h3>Support</h3>
+                        <p>Un souci ? Une question ? Contacte l'equipe technique :</p>
+                        <ul class="guide-list">
+                            <li><i class="fas fa-envelope"></i> <strong>Email :</strong> support@visitandsmile.fr</li>
+                            <li><i class="fas fa-phone"></i> <strong>Tel :</strong> Sur demande</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+
+    <!-- Confirm Delete Modal -->
+    <div class="modal-overlay" id="modalConfirmDelete">
+        <div class="modal-container modal-sm">
+            <div class="modal-header danger">
+                <h3><i class="fas fa-exclamation-triangle"></i> Confirmer la suppression</h3>
+                <button class="modal-close" id="modalConfirmDeleteClose"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" style="padding:1.5rem">
+                <p style="color:var(--gray-light);font-size:0.85rem;line-height:1.6">
+                    Es-tu sure de vouloir supprimer <strong id="deleteClientName" style="color:var(--white)"></strong> ?
+                    Cette action est irreversible.
+                </p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-sm btn-outline" id="btnCancelDelete">Annuler</button>
+                <button type="button" class="btn-sm btn-danger" id="btnConfirmDelete"><i class="fas fa-trash-alt"></i> Supprimer definitivement</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Nouvelle Vente -->
     <div class="modal-overlay" id="modalVente">
@@ -1607,6 +1750,7 @@
                 <button type="button" class="btn-sm btn-outline" id="btnClientEmail"><i class="fas fa-envelope"></i> Envoyer un email</button>
                 <button type="button" class="btn-sm btn-outline" id="btnClientRDV"><i class="fas fa-calendar-plus"></i> Planifier un RDV</button>
                 <button type="button" class="btn-sm btn-gold" id="btnClientEdit"><i class="fas fa-edit"></i> Modifier</button>
+                <button type="button" class="btn-sm btn-danger" id="btnClientDelete"><i class="fas fa-trash-alt"></i> Supprimer</button>
             </div>
         </div>
     </div>

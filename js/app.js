@@ -1750,6 +1750,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('clientDetailName').textContent = `${client.first_name} ${client.last_name}`;
         document.getElementById('clientDetailAvatar').textContent = initials;
+        document.getElementById('clientDetailAvatar').dataset.clientId = client.id;
         document.getElementById('clientDetailType').textContent = typeLabels[client.client_type] || client.client_type;
         document.getElementById('clientDetailEmail').innerHTML = client.email ? `<a href="mailto:${client.email}" style="color:var(--gold)">${client.email}</a>` : '—';
         document.getElementById('clientDetailPhone').innerHTML = client.phone ? `<a href="tel:${client.phone}" style="color:var(--gold)">${client.phone}</a>` : '—';
@@ -1781,6 +1782,81 @@ document.addEventListener('DOMContentLoaded', () => {
             const clientId = demoClients[index]?.id;
             if (clientId) viewClientDetail(clientId);
         });
+    });
+
+    // ===== DELETE CLIENT (avec confirmation) =====
+    const modalConfirmDelete = document.getElementById('modalConfirmDelete');
+    let deletingClientId = null;
+    let deletingClientName = '';
+
+    function openConfirmDelete() {
+        if (modalConfirmDelete) {
+            modalConfirmDelete.style.display = 'flex';
+            requestAnimationFrame(() => modalConfirmDelete.classList.add('open'));
+        }
+    }
+    function closeConfirmDelete() {
+        if (modalConfirmDelete) {
+            modalConfirmDelete.classList.remove('open');
+            setTimeout(() => modalConfirmDelete.style.display = 'none', 300);
+        }
+    }
+
+    document.getElementById('modalConfirmDeleteClose')?.addEventListener('click', closeConfirmDelete);
+    document.getElementById('btnCancelDelete')?.addEventListener('click', closeConfirmDelete);
+    modalConfirmDelete?.addEventListener('click', (e) => { if (e.target === modalConfirmDelete) closeConfirmDelete(); });
+
+    // Bouton supprimer dans la fiche client
+    document.getElementById('btnClientDelete')?.addEventListener('click', () => {
+        const nameEl = document.getElementById('clientDetailName');
+        deletingClientName = nameEl ? nameEl.textContent : '';
+        // Récupérer l'ID du client actuellement affiché
+        const avatarEl = document.getElementById('clientDetailAvatar');
+        if (avatarEl && avatarEl.dataset.clientId) {
+            deletingClientId = avatarEl.dataset.clientId;
+        }
+        document.getElementById('deleteClientName').textContent = deletingClientName;
+        closeClientDetail();
+        setTimeout(openConfirmDelete, 350);
+    });
+
+    // Confirmation de suppression
+    document.getElementById('btnConfirmDelete')?.addEventListener('click', async () => {
+        const btn = document.getElementById('btnConfirmDelete');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Suppression...';
+        btn.disabled = true;
+
+        try {
+            if (isSupabaseConfigured && deletingClientId) {
+                await db.from('clients').delete().eq('id', deletingClientId);
+            } else {
+                // Mode démo : supprimer du tableau local
+                const idx = demoClients.findIndex(c => c.id === deletingClientId);
+                if (idx !== -1) {
+                    demoClients.splice(idx, 1);
+                    // Supprimer la ligne du tableau HTML
+                    const rows = document.querySelectorAll('#page-clients .contacts-table tbody tr');
+                    if (rows[idx]) rows[idx].remove();
+                }
+                await new Promise(r => setTimeout(r, 400));
+            }
+
+            closeConfirmDelete();
+            showToast('Client supprimé', `${deletingClientName} a été supprimé avec succès`, 'success');
+
+            // Recharger les données si Supabase
+            if (isSupabaseConfigured) {
+                loadClientsData?.();
+            }
+
+        } catch (err) {
+            console.error('Delete error:', err);
+            showToast('Erreur', 'Impossible de supprimer le client', 'error');
+        } finally {
+            btn.innerHTML = '<i class="fas fa-trash-alt"></i> Supprimer définitivement';
+            btn.disabled = false;
+            deletingClientId = null;
+        }
     });
 
     // ===== EXPORT CSV COMPTABILITÉ =====
